@@ -18,31 +18,27 @@ function printMatrix(matrix) {
 }
 
 function task4(matrix) {
-    const n = matrix.length;
+    const m = matrix.length;          
+    if (m === 0) return [];
+    const n = matrix[0].length;       
 
-    for (let layer = 0; layer < Math.floor(n / 2); layer++) {
-        const first = layer;
-        const last = n - 1 - layer;
+    
+    const result = Array.from({ length: n }, () => new Array(m));
 
-        for (let i = first; i < last; i++) {
-            const offset = i - first;
-
-            const top = matrix[first][i];
-            matrix[first][i] = matrix[last - offset][first];
-            matrix[last - offset][first] = matrix[last][last - offset];
-            matrix[last][last - offset] = matrix[i][last];
-            matrix[i][last] = top;
+    for (let i = 0; i < m; i++) {
+        for (let j = 0; j < n; j++) {
+            result[j][m - 1 - i] = matrix[i][j];
         }
     }
 
-    return matrix;
+    return result;
 }
 
-const matrix = generateMatrix(4, 4, 0, 10);
+const matrix = generateMatrix(3, 4, 0, 10);
 console.log("До:");
 printMatrix(matrix);
 
-task4(matrix);
+const rotated = task4(matrix);
 
 console.log("Після обертання на 90°:");
-printMatrix(matrix);
+printMatrix(rotated);
